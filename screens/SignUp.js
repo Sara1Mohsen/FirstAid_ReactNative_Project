@@ -1,7 +1,10 @@
 ////////////////sign up/////
 import * as React from 'react'
-import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity  } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import axios from 'axios'
+import baseUrl from '../my_axios'
+import { ToastAndroid , Linking } from 'react-native';
 export default class SignUp extends React.Component {
   constructor() {
     super()
@@ -15,28 +18,50 @@ export default class SignUp extends React.Component {
       error_pass: "",
     }
   }
-  login() {
+  async login() {
     let fname = this.state.الاسم.trim()
-    let lname = this.state.البريدالالكتروني.trim()
-    let email = this.state.كلمةالمرور.trim()
+    let email = this.state.البريدالالكتروني.trim()
+    let pass = this.state.كلمةالمرور.trim()
+
+
 
     let err_fname = ''
     let err_lname = ''
     let err_email = ''
     let err_pass = ''
-    if (fname == '') {
+    if (fname == '' || email == '' || pass == '') {
+
+
       err_fname = 'Invalid fname'
+      
+      if (email == '') {
+        err_email = 'Invalid email'
+      }
+      if (pass == '') {
+        err_pass = 'Invalid pass'
+      }
     }
-    if (lname == '') {
-      err_lname = 'Invalid lname'
-    }
-    if (email == '') {
-      err_email = 'Invalid email'
-    }
-    if (pass == '') {
-      err_pass = 'Invalid pass'
-    }
-    this.setState({ error_fname: err_fname, error_lname: err_lname, error_email: err_email, error_pass: err_pass })
+   
+  
+
+
+     axios.post(baseUrl+"/Auth/register",{
+      
+        firstname: fname,
+        lastName: fname,
+        username: fname,
+        email: email,
+        password: pass
+      
+    }).then(res => {
+      this.props.navigation.navigate("Login")
+      console.log( res.data)
+    })
+   .catch(error=>{console.log(error)})
+
+
+    //this.props.navigation.navigate("Home")
+    //this.setState({ error_fname: err_fname, error_lname: err_lname, error_email: err_email, error_pass: err_pass })
   }
   render() {
     return (
@@ -48,8 +73,8 @@ export default class SignUp extends React.Component {
             <Text>قم بانشاء حساب
             </Text>
           </View>
-
-            <Image source={require("./images/emergency (1).png")}  style={{height:"3%",width:"15%"}}/>
+            {/* image is not appearing correctly */}
+            <Image source={require("../images/emergency(1).png")}  style={{ transform:[{translateX:30 } , {translateY:-50}] ,height:60,width:60}}/>
 
 
         </View>
@@ -124,8 +149,8 @@ export default class SignUp extends React.Component {
             }}>{this.state.error_email}</Text>
           </View>
           <TouchableOpacity
-              onPress={() => {
-                this.login()
+              onPress={ async () => {
+                await this.login()
               }}
               style={{
                paddingHorizontal:30,

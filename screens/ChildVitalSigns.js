@@ -1,19 +1,25 @@
 import * as React from 'react'
 //import ImagePicker from 'react-native-image-crop-picker'
-import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity, Dimensions } from 'react-native'
+import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity, Dimensions , Linking } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import PhoneNumbers from '../Navigation/PhoneNumbers'
+
+import SpeakerComponent from '../Navigation/SpeakerComponent'
 const { width, height } = Dimensions.get('window')
 export default class ChildVitalSigns extends React.Component {
 
   constructor() {
     super()
-
+    this.callref = React.createRef()
     this.state = {
 
     }
   }
+
+
+ 
+
+
   render() {
     return (
       <>
@@ -31,7 +37,7 @@ export default class ChildVitalSigns extends React.Component {
 
           </View>
 
-          <View style={{
+          <View ref={this.callref} style={{
             position: "absolute",
             width: "100%",
             height: height - 68,
@@ -41,9 +47,8 @@ export default class ChildVitalSigns extends React.Component {
          
 
             <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
-              <Text style={styles.titel}>*افحص العلامات الحيوية :-</Text>
-              <FontAwesome5 name='volume-up'
-                size={30} style={{ color: '#159da9', marginTop: 35, marginLeft: 20 }} />
+              <Text style={styles.titel}>افحص العلامات الحيوية </Text>
+              <SpeakerComponent Custom_ref={this.callref} />
             </View>
 
             <Text style={styles.text}>.النبض من الشريان العضدى</Text>
@@ -59,10 +64,10 @@ export default class ChildVitalSigns extends React.Component {
            <View style={{width:"80%",backgroundColor:'#159da9',height:"20%",alignSelf:"center",marginTop:"7%",borderRadius:10}}>
              <Text style={{fontSize:20,textAlign:"center",marginTop:30}}>هل يوجد نبض؟ </Text>
               <View style={{flexDirection:"row",justifyContent:"space-around",marginTop:"7%"}}>
-               <TouchableOpacity style={{width:80,height:40,backgroundColor:"white",borderRadius:5,alignItems:"center",justifyContent:"center"}}>
+               <TouchableOpacity onPress={() => this.props.navigation.navigate("CprQuestion")} style={{width:80,height:40,backgroundColor:"white",borderRadius:5,alignItems:"center",justifyContent:"center"}}>
                  <Text style={{color:'#159da9',fontSize:18}}>لا</Text>
                </TouchableOpacity>
-               <TouchableOpacity style={{width:80,height:40,backgroundColor:"white",borderRadius:5,alignItems:"center",justifyContent:"center"}}>
+               <TouchableOpacity onPress={() => this.props.navigation.navigate("ChildPulseYes")} style={{width:80,height:40,backgroundColor:"white",borderRadius:5,alignItems:"center",justifyContent:"center"}}>
                  <Text style={{color:'#159da9',fontSize:18}}>نعم</Text>
                </TouchableOpacity>
               </View>
@@ -71,14 +76,12 @@ export default class ChildVitalSigns extends React.Component {
             
           </View>
 
-            <View style={{ backgroundColor: '#39A9B3', height: 68, width: '100%', marginTop: "17%", flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-             <Ionicons name='settings' size={32} style={{ color: '#fff' }} />
-               <FontAwesome5 name='book-open' size={32} style={{ color: '#fff' }} />
-             <FontAwesome5 name='briefcase-medical' size={32} style={{ color: '#fff' }} />
-             </View>
-
-          <View style={{ position: 'absolute', bottom: 80, left: 10, backgroundColor: "#f00", width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center' }}>
+           
+          <View style={{ position: 'absolute', bottom: 2, left: 10, backgroundColor: "#f00", width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center' }}>
+          <TouchableOpacity onPress={() => Linking.openURL(PhoneNumbers.Emergency)}>
             <Icon name='phone-alt' size={25} style={{ color: '#fff', }} />
+
+            </TouchableOpacity>
 
           </View>
 

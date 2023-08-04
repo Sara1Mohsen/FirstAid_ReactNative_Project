@@ -1,21 +1,48 @@
 import * as React from 'react'
 //import ImagePicker from 'react-native-image-crop-picker'
-import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity, Dimensions } from 'react-native'
+import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity, Dimensions , Linking, ToastAndroid } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import VideoPlayer from 'react-native-video-player'
+import VideoPlayer from '../Navigation/CustomVideoPlayer'
+import SpeakerComponent from './../Navigation/SpeakerComponent';
+import PhoneNumbers from '../Navigation/PhoneNumbers'
 const { width, height } = Dimensions.get('window')
-export default class CprBaby extends React.Component {
+export default function CprBaby () {
 
-  constructor() {
-    super()
+  const speakerRef = React.useRef()
 
-    this.state = {
+  sendData = async () => {
 
+    try {
+      await context.sendata(
+        {
+          userID: this.context.userData.userID,
+          username: this.context.userData.username,
+          status : "not_seen",
+          emergencies: [
+            {
+              caseTitle: "الغماء",
+              q_As: [
+                {
+                  question: "هل يوجد نبض ؟",
+                  answer: "لا"
+                },{
+                  question: "ما الفئة العمرية ؟",
+                  answer: "رضيع"
+                }
+              ]
+            }
+          ]
+        })
+
+        ToastAndroid.show("Data Sent To Paramedics" , 200)
+    } catch (error) {
+      console.log(error)
     }
+  
   }
-  render() {
+
     return (
       <>
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
@@ -40,49 +67,51 @@ export default class CprBaby extends React.Component {
           
           }}>
          
-         <ScrollView>
+         <ScrollView ref={speakerRef}>
             <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
               <Text style={styles.titel}>*الاجراءات :-</Text>
-              <FontAwesome5 name='volume-up'
-                size={30} style={{ color: '#159da9', marginTop: 35, marginLeft: 20 }} />
+              <SpeakerComponent Custom_ref={speakerRef} />
             </View>
 
             <Text style={styles.text}>.قم باستخدام اصبعى الابهام والوسطى بالضغط فى منتصف صدر الرضيع 30 ضغطة بشكل سريع</Text>
             
                <Text style={styles.text}>.قم بعمل التنفس الصناعى للرضيع مرتين فى مدة لا تتجاوز 10 ثوانى بعد كل 15 ضغطة</Text>
                <Text style={styles.text}>.يتم التنفس الصناعى للرضيع من خلال الفم والأنف وليس الفم فقط</Text>
-               <VideoPlayer video={require("../videos/baby_cpr.mp4")}  
-                 showDuration={true}
-                 autoplay
-                 //disableControlsAutoHide={true}
-                 defaultMuted={true}
-                 disableSeek={true}
-                 pauseOnPress={true}
-                  style={{marginTop:"8%"}}/>
+               <VideoPlayer vid_url={ require("../videos/baby_cpr.mp4")}  
+                
+                  styles={{marginTop:"8%" , height:200}}/>
                <View style={{flexDirection:"row",marginTop: '8%',alignSelf:"flex-end"}}>
                  <Text style={{ fontSize: 16, color: '#e81025',marginTop:5}}>لا تتوقف حتى يستجيب الرضيع او حتى تصل الاسعاف</Text>
                  <Image source={require("../images/warning-sign.png")} style={{ height: 25, width: 30,alignSelf:"center"}}/>
                </View>
+               <TouchableOpacity onPress={sendData} >
+              <Image source={require("../images/image6.png")} style={{ height: 80, width: 80,alignSelf:"center",marginTop:40,
+              transform:[{translateY:-30}],
+              marginBottom:20
+          
+            
+            }}/>
+
+</TouchableOpacity>
                </ScrollView> 
             
             
           </View>
 
-            <View style={{ backgroundColor: '#39A9B3', height: 68, width: '100%', marginTop: "17%", flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-             <Ionicons name='settings' size={32} style={{ color: '#fff' }} />
-               <FontAwesome5 name='book-open' size={32} style={{ color: '#fff' }} />
-             <FontAwesome5 name='briefcase-medical' size={32} style={{ color: '#fff' }} />
-             </View>
+       
 
-          <View style={{ position: 'absolute', bottom: 80, left: 10, backgroundColor: "#f00", width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center' }}>
+          {/* <View style={{ position: 'absolute', bottom: 2, left: 10, backgroundColor: "#f00", width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center' }}>
+          <TouchableOpacity onPress={() => Linking.openURL(PhoneNumbers.Emergency)}>
             <Icon name='phone-alt' size={25} style={{ color: '#fff', }} />
 
-          </View>
+            </TouchableOpacity>
+
+          </View> */}
 
         </View>
       </>
     )
-  }
+  
 }
 const styles = StyleSheet.create({
   titel: {

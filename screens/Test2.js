@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet , Linking } from 'react-native'
 
 export default class Test2 extends React.Component {
 

@@ -1,34 +1,42 @@
 import * as React from 'react'
 //import ImagePicker from 'react-native-image-crop-picker'
-import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity,Dimensions } from 'react-native'
+import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity,Dimensions , Linking } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import RadioGroup from 'react-native-radio-buttons-group';
+import SpeakerComponent from './../Navigation/SpeakerComponent';
+import PhoneNumbers from '../Navigation/PhoneNumbers';
 const { width, height } = Dimensions.get('window')
 export default class Faint3 extends React.Component {
 
     constructor(props){
               super(props)
-                 this.state = {                     
+              this.callref = React.createRef()
+                 this.state = {  
+                            
                      radioButtons: [
                           {
                              id: '1', // acts as primary key, should be unique and non-empty string
                              label:'السكر' ,
+                             PageName:"SugarAndPressure",
                              value: 'Arabic'
                           },
                           {
                             id: '2',
                             label: 'السكر والضغط',
+                            PageName:"SugarAndPressure",
                             value: 'Arabic'
                           },
                           {
                             id: '3',
                             label: 'الضغط',
+                            PageName:"PressureOrNot",
                             value: 'Arabic'
                           },
                           {
                             id: '4',
                             label: 'لا اعانى',
+                            PageName:"PressureOrNot",
                             value: 'Arabic'
                           }
 
@@ -37,12 +45,16 @@ export default class Faint3 extends React.Component {
                                   ]
   }}
     onPressRadioButton = (radioButtonsArray) => {
-      this.setState({radioButtons: radioButtonsArray});
+      let target_index = radioButtonsArray.find(radio => radio.selected).PageName
+      this.props.navigation.navigate(target_index)
+     // this.setState({selected_item: radioButtonsArray});
        }
 
   render() {
     return (
       <>
+            <Text style={{ display:"none"}} ref={this.callref}>{this.state.radioButtons.reduce( (acc , curr) => acc + curr.label,"") }</Text>
+
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
           <View style={{ backgroundColor: "#fff", flex: 1 }}>
             <View style={{ width: "100%", height:50 , alignSelf: "center", marginTop: 20, paddingHorizontal: "2.5%", flexDirection: 'row' }}>
@@ -112,16 +124,14 @@ export default class Faint3 extends React.Component {
               </View>
 
             </View>
-            <View style={{ backgroundColor: '#39A9B3', height: 68, width: '100%', marginTop: "14%", flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-              <Ionicons name='settings' size={32} style={{ color: '#fff' }} />
-              <FontAwesome5 name='book-open' size={32} style={{ color: '#fff' }} />
-              <FontAwesome5 name='briefcase-medical' size={32} style={{ color: '#fff' }} />
-            </View>
+          
           </View>
 
           <View style={{ position: 'absolute', bottom: 70, left: 15, backgroundColor: "#f00", width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity onPress={() => Linking.openURL(PhoneNumbers.Emergency)}>
             <FontAwesome5 name='phone-alt' size={25} style={{ color: '#fff', }} />
 
+            </TouchableOpacity>
           </View>
 
           <View style={{
@@ -141,10 +151,12 @@ export default class Faint3 extends React.Component {
               borderRadius:10
             }}>
 
-            <FontAwesome5 name='volume-up' size={30} style={{ color: '#fff',alignSelf:"flex-start",paddingHorizontal:"5%" }} />
+            <SpeakerComponent Custom_ref={this.callref} styles={{ color: '#fff',alignSelf:"flex-start",paddingHorizontal:"5%" }} />
               <RadioGroup 
-            radioButtons={this.state.radioButtons} 
-            onPress={this.onPressRadioButton} 
+         
+            radioButtons={this.state.radioButtons}
+            onPress= {this.onPressRadioButton} 
+           //onPress={() => this.props.navigation.navigate("SugarAndPressure")}
             layout='column'
              />
             </View>

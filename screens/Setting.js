@@ -1,6 +1,6 @@
 import * as React from 'react'
 //import ImagePicker from 'react-native-image-crop-picker'
-import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity, Dimensions } from 'react-native'
+import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity, Dimensions , Linking } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -14,6 +14,7 @@ export default class Setting extends React.Component {
 
     }
   }
+  // linkTo = useLinkTo();
   render() {
     return (
       <>
@@ -42,12 +43,12 @@ export default class Setting extends React.Component {
              </View>
              <Text style={{fontSize:20,fontWeight:"bold",color:"black",textAlign:"center",marginTop:"5%"}}>الإعدادات</Text>
 
-             <TouchableOpacity   style={{width:"90%",alignSelf:"center",borderWidth:.2,marginTop:"5%",flexDirection:"row",alignItems:"flex-end",justifyContent:"flex-end",paddingHorizontal:"5%"}}>
+             {/* <TouchableOpacity   style={{width:"90%",alignSelf:"center",borderWidth:.2,marginTop:"5%",flexDirection:"row",alignItems:"flex-end",justifyContent:"flex-end",paddingHorizontal:"5%"}}>
                 <Text style={{fontSize:20,color:'black',marginRight:20,marginBottom:"1%"}}>اللغة</Text>
                 <Icon name='flag' size={30} style={{color:'black'}}/>
-             </TouchableOpacity>
+             </TouchableOpacity> */}
             
-             <TouchableOpacity   style={{width:"90%",alignSelf:"center",borderWidth:.2,marginTop:"5%",flexDirection:"row",alignItems:"flex-end",justifyContent:"flex-end",paddingHorizontal:"5%"}}>
+             <TouchableOpacity onPress={() => this.props.navigation.navigate("Login")}  style={{width:"90%",alignSelf:"center",borderWidth:.2,marginTop:"5%",flexDirection:"row",alignItems:"flex-end",justifyContent:"flex-end",paddingHorizontal:"5%"}}>
                 <Text style={{fontSize:20,color:'black',marginRight:20,marginBottom:"1%"}}>تسجيل الخروج</Text>
                 <Icon name='user' size={30} style={{color:'black'}}/>
              </TouchableOpacity>
@@ -59,7 +60,7 @@ export default class Setting extends React.Component {
 
              <TouchableOpacity   style={{width:"90%",alignSelf:"center",borderWidth:.2,marginTop:"5%",flexDirection:"row",alignItems:"flex-end",justifyContent:"flex-end",paddingHorizontal:"5%"}}>
                 <Text style={{fontSize:20,color:'black',marginRight:20,marginBottom:"1%"}}>تواصل معنا</Text>
-                <Icon name='messages' size={30} style={{color:'black'}}/>
+                {/* <Icon name='messages' size={30} style={{color:'black'}}/> */}
              </TouchableOpacity>
 
 
@@ -69,13 +70,9 @@ export default class Setting extends React.Component {
 
 
 
-          <View style={{ backgroundColor: '#39A9B3', height: 68, width: '100%', marginTop: "17%", flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-             <Ionicons name='settings' size={32} style={{ color: '#fff' }} />
-               <FontAwesome5 name='book-open' size={32} style={{ color: '#fff' }} />
-             <FontAwesome5 name='briefcase-medical' size={32} style={{ color: '#fff' }} />
-          </View>
+       
 
-          <View style={{ position: 'absolute', bottom: 80, left: 10, backgroundColor: "#f00", width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ position: 'absolute', bottom: 2, left: 10, backgroundColor: "#f00", width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center' }}>
             <Icon name='phone-alt' size={25} style={{ color: '#fff', }} />
 
           </View>

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import  { useState } from 'react'
 //import ImagePicker from 'react-native-image-crop-picker'
-import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity, Dimensions } from 'react-native'
+import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput, TouchableOpacity, Dimensions , Linking } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -91,13 +91,9 @@ export default class Language extends React.Component {
 
 
 
-          <View style={{ backgroundColor: '#39A9B3', height: 68, width: '100%', marginTop: "17%", flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-             <Ionicons name='settings' size={32} style={{ color: '#fff' }} />
-               <FontAwesome5 name='book-open' size={32} style={{ color: '#fff' }} />
-             <FontAwesome5 name='briefcase-medical' size={32} style={{ color: '#fff' }} />
-          </View>
+        
 
-          <View style={{ position: 'absolute', bottom: 80, left: 10, backgroundColor: "#f00", width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ position: 'absolute', bottom: 2, left: 10, backgroundColor: "#f00", width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center' }}>
             <Icon name='phone-alt' size={25} style={{ color: '#fff', }} />
 
           </View>

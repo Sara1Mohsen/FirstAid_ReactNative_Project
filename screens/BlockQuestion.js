@@ -1,12 +1,14 @@
 import * as React from 'react'
 //import ImagePicker from 'react-native-image-crop-picker'
-import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput,TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, View, Image, ScrollView, ImageBackground, StatusBar, TextInput,TouchableOpacity , Linking } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import SpeakerComponent from '../Navigation/SpeakerComponent';
 export default class BlockQuestion extends React.Component {
 
   constructor() {
     super();
+    this.callref = React.createRef()
     this.state = {
       text: ""
 
@@ -87,11 +89,7 @@ export default class BlockQuestion extends React.Component {
               </View>
 
             </View>
-            <View style={{ backgroundColor: '#39A9B3', height: 68, width: '100%', marginTop: "14%", flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-              <Ionicons name='settings' size={32} style={{ color: '#fff' }} />
-              <FontAwesome5 name='book-open' size={32} style={{ color: '#fff' }} />
-              <FontAwesome5 name='briefcase-medical' size={32} style={{ color: '#fff' }} />
-            </View>
+           
           </View>
 
           <View style={{ position: 'absolute', bottom: 70, left: 15, backgroundColor: "#f00", width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center' }}>
@@ -108,7 +106,7 @@ export default class BlockQuestion extends React.Component {
             justifyContent: 'center',
           }}>
 
-            <View style={{
+            <View ref={this.callref} style={{
               width:"80%",
               paddingVertical: 20,
               backgroundColor: "#39A9B3",
@@ -116,15 +114,15 @@ export default class BlockQuestion extends React.Component {
               ,borderRadius:10
             }}>
 
-              <FontAwesome5 name='volume-up' size={30} style={{ color: '#fff',alignSelf:"flex-start",paddingHorizontal:"5%" }} />
-              <Text style={{fontSize:20}}>اختر العمر المناسب للمريض:-</Text>
+              <SpeakerComponent Custom_ref={this.callref} styles={{ color: '#fff',alignSelf:"flex-start",paddingHorizontal:"5%" }} />
+              <Text style={{fontSize:20}}>اختر العمر المناسب للمريض</Text>
               <View style={{width:"100%",flexDirection:"row",marginTop:"3%",justifyContent:"space-around"}}>
 
-              <TouchableOpacity style={{width:"25%",alignItems:'center',justifyContent:'center'}}>
+              <TouchableOpacity onPress={() => {this.props.navigation.navigate("BlockChild")}} style={{width:"25%",alignItems:'center',justifyContent:'center'}}>
                 <Image source={require("../images/child.png")} style={{ height: 70, width:70}}/>
               </TouchableOpacity>  
                 
-                 <TouchableOpacity style={{width:"25%",alignItems:'center',justifyContent:'center'}}>
+                 <TouchableOpacity onPress={() => {this.props.navigation.navigate("BlockAdult")}} style={{width:"25%",alignItems:'center',justifyContent:'center'}}>
                  <Image source={require("../images/adult.png")} style={{ height: 70, width:70}}/>
                  </TouchableOpacity>
 
